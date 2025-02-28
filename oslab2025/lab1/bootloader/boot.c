@@ -1,10 +1,15 @@
 #include "boot.h"
 
 #define SECTSIZE 512
+char buffer[SECTSIZE];
 
 void bootMain(void) {
 	//TODO
+	// readSect(buffer, 0);
 
+	// while(1){
+	// 	;
+	// }
 }
 
 
