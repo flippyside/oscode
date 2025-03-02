@@ -5,11 +5,11 @@ char buffer[SECTSIZE];
 
 void bootMain(void) {
 	//TODO
-	// readSect(buffer, 0);
-
-	// while(1){
-	// 	;
-	// }
+	// FIXME
+    readSect((void *)0x8c00, 1);
+	//((void(*)(void))0x8c00)();
+	asm volatile("movw $0x8c00, %ax \n\t"
+					"jmp %ax");
 }
 
 
