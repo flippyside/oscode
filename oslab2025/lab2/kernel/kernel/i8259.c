@@ -1,4 +1,5 @@
 #include "x86.h"
+// 重设主从8259A
 
 #define PORT_PIC_MASTER 0x20
 #define PORT_PIC_SLAVE  0xA0

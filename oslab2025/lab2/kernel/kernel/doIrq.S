@@ -6,6 +6,7 @@ that is TSS doesn't work
 2. Interrupt Gate, IF is set automatically
 3. System Gate
 */
+// 中断处理
 
 .code32
 
@@ -61,14 +62,14 @@ irqSecException:
 	jmp asmDoIrq
 
 .global irqKeyboard
-irqKeyboard:
+irqKeyboard: // 设置IDT让中断号与中断处理程序绑定
 	pushl $0
 	# TODO: 将irqKeyboard的中断向量号压入栈
-
+	pushl $0x21
 	jmp asmDoIrq
 
 .global irqTimer
-irqTimer:
+irqTimer:  // 定时器的中断处理程序
 	pushl $0
 	pushl $0x20
 	jmp asmDoIrq

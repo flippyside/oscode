@@ -1,5 +1,6 @@
 #include "x86.h"
 #include "device.h"
+// 初始化串口输出
 
 void initSerial(void) {
 	outByte(SERIAL_PORT + 1, 0x00);

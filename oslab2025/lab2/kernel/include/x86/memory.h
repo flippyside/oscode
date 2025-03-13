@@ -28,7 +28,7 @@
 
 struct GateDescriptor {
 	uint32_t offset_15_0      : 16;
-	uint32_t segment          : 16;
+	uint32_t segment          : 16; // selector
 	uint32_t pad0             : 8;
 	uint32_t type             : 4;
 	uint32_t system           : 1;

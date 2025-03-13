@@ -1,5 +1,6 @@
 #include "x86.h"
 #include "device.h"
+// 中断处理函数
 
 extern int displayRow;
 extern int displayCol;

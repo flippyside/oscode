@@ -1,5 +1,6 @@
 #include "x86.h"
 #include "device.h"
+// 初始化键码表
 
 /* Press Scan Code */
 #define KESC_P 0x01 // escape

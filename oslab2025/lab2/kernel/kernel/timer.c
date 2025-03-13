@@ -1,5 +1,6 @@
 #include "x86.h"
 #include "device.h"
+// 设置8253/4定时器芯片
 
 #define TIMER_PORT 0x40
 #define FREQ_8253 1193182

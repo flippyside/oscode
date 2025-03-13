@@ -1,5 +1,6 @@
 #include "x86.h"
 #include "device.h"
+// 初始化 GDT 和加载用户程序
 
 SegDesc gdt[NR_SEGMENTS];       // the new GDT, NR_SEGMENTS=7, defined in x86/memory.h
 TSS tss;

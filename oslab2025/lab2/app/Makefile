@@ -1,5 +1,5 @@
-CC = gcc
-LD = ld
+CC = x86_64-elf-gcc
+LD = x86_64-elf-ld
 
 CFLAGS = -m32 -march=i386 -static \
 	 -fno-builtin -fno-stack-protector -fno-omit-frame-pointer \
