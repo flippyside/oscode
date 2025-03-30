@@ -5,7 +5,11 @@
 SegDesc gdt[NR_SEGMENTS];       // the new GDT, NR_SEGMENTS=7, defined in x86/memory.h
 TSS tss;
 
-//init GDT and LDT
+void Print(char *a) {
+	while (*a != '\0') putChar(*a++);
+}
+
+//init GDT and LDT and TSS
 void initSeg() { // setup kernel segements
 	gdt[SEG_KCODE] = SEG(STA_X | STA_R, 0,       0xffffffff, DPL_KERN);
 	gdt[SEG_KDATA] = SEG(STA_W,         0,       0xffffffff, DPL_KERN);
@@ -41,6 +45,9 @@ void enterUserSpace(uint32_t entry) {
 	 * you should set the right segment registers here
 	 * and use 'iret' to jump to ring3
 	 */
+	// char *str = "Into enterUserSpace\n\0";
+	// Print(str);
+
 	uint32_t EFLAGS = 0;
 	asm volatile("pushl %0":: "r" (USEL(SEG_UDATA))); // push ss
 	asm volatile("pushl %0":: "r" (0x2fffff)); 
@@ -59,11 +66,26 @@ user program is loaded to location 0x200000, i.e., 2MB
 size of user program is not greater than 200*512 bytes, i.e., 100KB
 */
 
+
 void loadUMain(void) {
 	// TODO: 参照bootloader加载内核的方式，由kernel加载用户程序
+	// void(*uMainEntry)(void);
+	uint32_t uMainEntry = 0x200000;
+	// char *str = "Into loadUMain\n\0";
+	int offset = 0x1000;
+	unsigned int elf = 0x200000;
 	
+	int start = 201;
+	for(int i = 0; i < 200; i++){
+		readSect((void*)(elf + i*512), start + i); 
+	}
 
+	struct ELFHeader* elfHeader = (void*)elf;
+	uMainEntry = (uint32_t)(elfHeader->entry);
 
-	enterUserSpace(uMainEntry);
-	
+	for(int i  = 0; i < 200 * 512; i++){
+		*(uint8_t*)(elf + i) = *(uint8_t*)(elf + i + offset);
+	}
+	// Print(str);
+	enterUserSpace(uMainEntry);	
 }

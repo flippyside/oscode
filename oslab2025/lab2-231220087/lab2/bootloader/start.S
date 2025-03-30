@@ -26,8 +26,22 @@ start32:
 	movw %ax, %ss
 	movw $0x18, %ax  # setting graphics data segment selector
 	movw %ax, %gs
-	
-	movl $0x1fffff,%eax        #  setting esp
+
+        # 设置8253定时器
+        mov $0x36, %al  # 0x36：计数器0，模式3，低字节/高字节
+        out %al, $0x43
+        
+        # 计算计数值，产生20 毫秒的时钟中断，时钟频率为1193180 赫兹
+        # 计数值 = (时钟频率 / 每秒中断次数) - 1
+        #       = (1193180 / (1 / 0.02 )) - 1 = 23863
+        mov $23863, %ax
+        out %al, $0x40  # 低字节
+        mov %ah, %al
+        out %al, $0x40  # 高字节
+		# 无需sti开中断
+
+	; movl $0x1fffff,%eax        #  setting esp
+	movl $0x7c00,%eax        #  setting esp
 	movl %eax,%esp
 	
 	jmp bootMain # jump to bootMain in boot.c

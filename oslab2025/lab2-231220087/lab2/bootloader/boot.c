@@ -5,25 +5,31 @@
 
 void bootMain(void) {
 	int i = 0;
-	int phoff = 0x34; // program header offset
-	int offset = 0x1000; // .text section offset
-	unsigned int elf = 0x100000; // physical memory addr to load
-	void (*kMainEntry)(void);
-	kMainEntry = (void(*)(void))0x100000; // entry address of the program
+	int phoff = 0x34; // program header offset， 程序头表 在 ELF 文件中的偏移量
+	int offset = 0x1000; // .text section offset，.text 段在 ELF 文件中的偏移量, 通常为0x1000
+	unsigned int elf = 0x100000; // physical memory addr to load，ELF 加载到物理内存的起始地址
+	void (*kMainEntry)(void); // 函数指针
+	kMainEntry = (void(*)(void))0x100000; // entry address of the program 程序入口点
 
-	for (i = 0; i < 200; i++) {
+	for (i = 0; i < 200; i++) { // 加载elf
 		readSect((void*)(elf + i*512), 1+i);
 	}
 
 	// TODO: 阅读boot.h查看elf相关信息，填写kMainEntry、phoff、offset
 
+	struct ELFHeader* elfHeader = (void*)elf;
+	kMainEntry = (void(*)(void))elfHeader->entry; // 指向 ELF 文件的入口点
+	phoff = elfHeader->phoff;
 
 	for (i = 0; i < 200 * 512; i++) {
 			*(unsigned char *)(elf + i) = *(unsigned char *)(elf + i + offset);
-		}
+	}
 
 	kMainEntry();
 }
+
+	// ProgramHeader* programHeader = (ProgramHeader*)(elf + phoff); // 程序头表
+	// offset = programHeader->off;
 
 void waitDisk(void) { // waiting for disk
 	while((inByte(0x1F7) & 0xC0) != 0x40);

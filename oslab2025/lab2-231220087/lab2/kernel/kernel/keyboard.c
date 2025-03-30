@@ -216,7 +216,7 @@ uint32_t getKeyCode() {
 		return 0;
 }
 
-char getChar(uint32_t code) {
+char getChar(uint32_t code) { // 将code转化为char
 	if (code >= KF12_P)
 		return 0;
 	else

@@ -8,6 +8,12 @@
 #define STD_IN 0 // 可修改 可自定义
 #define STD_STR 1 // 可修改 可自定义
 
+#define SYS_NOW 2 
+
+#define SYS_SET_TIME_FLAG 3
+#define SYS_GET_TIME_FLAG 4
+
+
 #define MAX_BUFFER_SIZE 256
 
 void printf(const char *format,...);

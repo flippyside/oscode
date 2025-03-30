@@ -8,20 +8,24 @@ void kEntry(void) {
 	
 	// TODO: 做一系列初始化
 	// initialize idt
-	
+	initIdt();
+
 	// initialize 8259a
-	
+	initIntr();
+
 	// initialize gdt, tss
-	
+	initSeg();
+
 	// initialize vga device
-	
+	initVga();
+
 	// initialize keyboard device
-
-
-
+	initKeyTable();
+	
+	// putNum(9);
 
 	loadUMain(); // load user program, enter user space
-
+	
 	while(1);
 	assert(0);
 }

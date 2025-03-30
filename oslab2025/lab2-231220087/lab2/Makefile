@@ -19,3 +19,8 @@ clean:
 	@cd kernel; make clean
 	@cd app; make clean
 	rm -f os.img
+
+go:
+	make clean
+	make os.img
+	make play
